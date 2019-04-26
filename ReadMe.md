@@ -4,4 +4,5 @@
 https://junicorn.gitbooks.io/java8-tutorial/content/
 https://lw900925.github.io/java/java8-stream-api.html
 https://github.com/judasn/java8-zh-cn-tutorial
-[中间处理的 懒操作 ](https://blog.csdn.net/dm_vincent/article/details/40503685)
+[中间处理的 懒操作 ](https://blog.csdn.net/dm_vincent/article/details/40503685)、
+https://github.com/biezhi/30-seconds-of-java8
