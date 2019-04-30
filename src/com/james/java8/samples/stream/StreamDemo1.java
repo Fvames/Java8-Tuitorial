@@ -1,12 +1,15 @@
 package com.james.java8.samples.stream;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import com.james.java8.samples.model.ModelDataGenerateUtils;
+import com.james.java8.samples.model.User;
+
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.*;
 
 /**
  * Predicate、Consumer、
@@ -41,48 +44,63 @@ public class StreamDemo1 {
 
         // 创建流
         //createStream();
+
         // 使用流
-        useStream();
+        //useStream();
 
-        // 数据收集
-        // 规约和汇总
         // 分组
+        //new StreamDemo1().userGroup();
 
-        // 输出
+        // 对象集合
+        //new StreamDemo1().userObjects();
 
-        // 并行处理
+    }
+
+    private void userObjects() {
+        List<User> users = ModelDataGenerateUtils.getUsers();
+
+        //	-根据属性值过滤, 修改 Object 中的属性值
+        users.stream().filter(user -> user.getAge() >= 30).forEach(user -> user.setUserName(user.getUserName() + user.getAge()));
+
+        // - 返回某个属性值的List
+        List<String> names = users.stream().map(User::getUserName).collect(toList());
+        System.out.println("names: " + names);
+
+        //	- 字段值排序（字符串转为 double/int 排序）
+        List<User> sortByAge = users.stream().sorted(Comparator.comparingLong(User::getAge)).collect(toList());
+
+        sortByAge.forEach(System.out::println);
+
+    }
+
+    private void userGroup() {
+        List<User> users = ModelDataGenerateUtils.getUsers();
+
+        Map<String, List<User>> deptUserMap = users.stream().collect(groupingBy(user -> {
+            if ("中部".equals(user.getDept())) {
+                return "中部";
+            } else if ("南部".equals(user.getDept())) {
+                return "南部";
+            } else {
+                return "无";
+            }
+        }));
+
+        deptUserMap.forEach((key, value) -> System.out.println("key：" + key + "， value：" + value));
+
+        System.out.println(users.stream().collect(groupingBy(User::getAge, counting())));
+
+        Map<String, User> maxAge = users.stream().collect(
+                groupingBy(User::getDept,
+                        collectingAndThen(maxBy(Comparator.comparingDouble(User::getAge)), Optional::get)));
+        maxAge.forEach((key, value) -> System.out.println("key：" + key + "， value：" + value));
     }
 
     private static void useStream() {
-        /*
-
-        allMatch
-        anyMatch
-        builder
-        collect
-        concat
-        count
-        distinct
-        empty
-        filter
-        forEach
-        forEachOrdered
-        generate
-        iterate
-        limit
-        map
-        mapToDouble
-        mapToInt
-        mapToLong
-        noneMatch
-        sorted
-        toArray
-        Builder
-
-        */
 
         // 过滤、去重、跳过、限制数量、排序、转换
-        List<Integer> list1 = Stream.iterate(1, i -> i + 1).limit(20)
+        List<Integer> stream = Stream.iterate(1, i -> i + 1).limit(20).collect(Collectors.toList());
+        List<Integer> list1 = stream.stream()
                 .filter(i -> i % 2 == 0)
                 .distinct()
                 .skip(2)
@@ -103,24 +121,16 @@ public class StreamDemo1 {
         System.out.println("peek:" + list2);
 
         // 归约汇总
+        Optional<Integer> sum = stream.stream().reduce((n, m) -> n + m);
+        System.out.println("sum: " + sum.get());
+        System.out.println(stream.stream().limit(20).max(Comparator.comparing(Integer::intValue)));
+        System.out.println(stream.stream().count());
 
-        // list、map、set 交叉处理数据
+        System.out.println("--------------------------");
+        IntSummaryStatistics intSummaryStatistics = stream.stream().collect(IntSummaryStatistics::new, IntSummaryStatistics::accept, IntSummaryStatistics::combine);
+        System.out.println("intSummaryStatistics.getMax()：" + intSummaryStatistics.getMax());
+        System.out.println("intSummaryStatistics.getAverage()：" + intSummaryStatistics.getAverage());
 
-
-
-        /*
-
-        flatMap
-        flatMapToDouble
-        flatMapToInt
-        flatMapToLong
-
-        peek
-         */
-
-        // reduce
-        // max
-        // min
     }
 
     private static void createStream() throws Exception {
