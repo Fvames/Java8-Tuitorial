@@ -16,12 +16,7 @@ public class TaskExecutionWebServer {
 
         while (true) {
             final Socket connection = socket.accept();
-            Runnable task = new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println("connection: " + connection);
-                }
-            };
+            Runnable task = () -> System.out.println("connection: " + connection);
 
             exec.execute(task);
         }
