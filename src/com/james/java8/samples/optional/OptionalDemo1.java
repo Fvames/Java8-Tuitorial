@@ -24,6 +24,11 @@ public class OptionalDemo1 {
         Optional<User> userOptional2 = Optional.ofNullable(null);
         String userName1 = userOptional2.map(User::getUserName).orElse("夜王");
         System.out.println(userName1);
+
+        Optional<User> user2 = Optional.ofNullable(user);
+        String userName2 = user2.map(User::getUser).map(User::getUserName).orElse("暂无数据");
+        System.out.println("userName2: " + userName2);
+
     }
 
     private static void testBase() {
