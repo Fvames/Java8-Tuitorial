@@ -23,6 +23,8 @@ public class CountDownLatchDemo1 {
             System.out.println("thread 1");
 
             latch.countDown();
+
+            System.out.println("thread 1 complate");
         }).start();
 
         new Thread(() -> {

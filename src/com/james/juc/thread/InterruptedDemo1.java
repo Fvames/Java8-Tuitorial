@@ -10,8 +10,10 @@ public class InterruptedDemo1 {
         Thread thread = Thread.currentThread();
 
         Thread thread1 = new Thread(() -> {
+
             if (Thread.currentThread().isInterrupted()) {
-                thread.interrupt();
+                System.out.println("准备终止 main 线程");
+                //thread.interrupt();
             }
         });
 
