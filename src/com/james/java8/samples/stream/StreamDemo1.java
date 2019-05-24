@@ -54,6 +54,24 @@ public class StreamDemo1 {
         // 对象集合
         //new StreamDemo1().userObjects();
 
+        // 转换
+        demoFlatMap();
+
+    }
+
+    private static void demoFlatMap() {
+        // 一维转二维
+        Arrays.asList("1,2", "3,4,5").stream()
+                .map(value -> value.split(","))
+                .forEach(value -> System.out.println(Arrays.toString(value)));
+
+        // 二维降一维
+        Integer result2 = Arrays.asList("1,2", "3,4,5").stream()
+                .map(value -> value.split(","))
+                .flatMap(value -> Arrays.stream(value))
+                .map(Integer::valueOf)
+                .reduce(1, Integer::sum);
+        System.out.println("result2：" + result2);
     }
 
     private void userObjects() {

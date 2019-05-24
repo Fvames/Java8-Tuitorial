@@ -11,6 +11,7 @@ public class User {
     private String userName;
     private String dept;
     private Long age;
+    private User user;
 
     public User(Long id, String userName, String dept, Long age) {
         this.id = id;
@@ -49,6 +50,14 @@ public class User {
 
     public void setAge(Long age) {
         this.age = age;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
