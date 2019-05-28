@@ -55,8 +55,19 @@ public class StreamDemo1 {
         //new StreamDemo1().userObjects();
 
         // 转换
-        demoFlatMap();
+        //demoFlatMap();
 
+        // map 处理
+        mapToList();
+    }
+
+    private static void mapToList() {
+        Map<String, User> map = new HashMap<>();
+        map.put("1", new User(1L, "张三", "开发", 23L));
+        map.put("2", new User(2L, "李四", "销售", 30L));
+
+        List<User> users = map.entrySet().stream().map(u -> u.getValue()).collect(Collectors.toList());
+        users.stream().forEach(System.out::println);
     }
 
     private static void demoFlatMap() {
