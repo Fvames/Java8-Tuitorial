@@ -11,5 +11,6 @@ public class Department {
     private String deptName;
     private List<User> userList;
     private String[] userNames;
+    private List<String> deptNames;
 
 }

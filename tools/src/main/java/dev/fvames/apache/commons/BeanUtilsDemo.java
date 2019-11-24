@@ -7,10 +7,7 @@ import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.BeanUtilsBean2;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BeanUtilsDemo {
 
@@ -19,8 +16,12 @@ public class BeanUtilsDemo {
         BeanUtilsBean beanUtilsBean = new BeanUtilsBean2();
         beanUtilsBean.getConvertUtils().register(false, false, 0);
 
-        //bean2Bean(beanUtilsBean);
+        bean2Bean(beanUtilsBean);
 
+        //bean2NativeBean(beanUtilsBean);
+    }
+
+    private static void bean2NativeBean(BeanUtilsBean beanUtilsBean) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         UserNative userNative = new UserNative();
         Map<String, Object> map = new HashMap<>();
         map.put("id", 1);
@@ -75,15 +76,19 @@ public class BeanUtilsDemo {
         user.setUserName("达克妮");
         user.setAge(32);
         department.setUserList(users);
+        department.setDeptNames(Arrays.asList("开发部", "销售部", "行政部"));
 
-        //String user1 = beanUtilsBean.getProperty(department, "userList[0]");
+        String userList1 = beanUtilsBean.getProperty(department, "userList");
         //System.out.println("user1: " + user1);
 
         Department dept2 = new Department();
         beanUtilsBean.copyProperties(dept2, department);
         System.out.println("dept2.getDeptName(): " + dept2.getDeptName());
 
+        // 不拷贝 List<Object>
         Department dept3 = (Department) beanUtilsBean.cloneBean(department);
-        System.out.println("dept3.getDeptName(): " + dept3.getDeptName());
+        System.out.println("dept3.getUserList().size(): " + dept3.getUserList().size()); // 0
+        // 对基本类型的包装类进行拷贝， ps：List<String>
+        dept3.getDeptNames().forEach(System.out::println);
     }
 }
