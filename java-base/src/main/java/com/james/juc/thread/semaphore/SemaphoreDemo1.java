@@ -1,6 +1,9 @@
 package com.james.juc.thread.semaphore;
 
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 对资源限制访问，控制同时访问某个资源的操作数量
