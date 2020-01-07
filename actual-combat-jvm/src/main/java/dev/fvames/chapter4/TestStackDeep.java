@@ -1,4 +1,4 @@
-package dev.fvames.chapter2;
+package dev.fvames.chapter4;
 
 /**
  * 使用 jclasslib 查看函数局部变量信息

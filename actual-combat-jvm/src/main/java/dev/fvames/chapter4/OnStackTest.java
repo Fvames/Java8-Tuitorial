@@ -1,4 +1,4 @@
-package dev.fvames.chapter2;
+package dev.fvames.chapter4;
 
 /**
  * 逃逸对象：可能被任何线程访问（常量）

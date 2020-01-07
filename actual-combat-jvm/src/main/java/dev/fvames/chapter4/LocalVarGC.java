@@ -1,4 +1,4 @@
-package dev.fvames.chapter2;
+package dev.fvames.chapter4;
 
 /**
  * java -XX:+PrintGC
